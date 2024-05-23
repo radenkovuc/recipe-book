@@ -1,0 +1,31 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
+        @for (i of [1, 2, 3]; track i) {
+          <span class="icon-bar"></span>
+        }
+      </button>
+      <a href="#" class="navbar-brand">Recipe Book</a>
+    </div>
+    <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
+      <ul class="nav navbar-nav">
+        <li role="presentation" routerLinkActive="active">
+          <a routerLink="/recipes">Recipes</a>
+        </li>
+        <li role="presentation" routerLinkActive="active">
+          <a routerLink="/shopping-list">Shopping book</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" appDropdown>
+          <a class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a (click)="postRecipes()">Save</a></li>
+            <li><a (click)="fetchRecipes()">Fetch</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

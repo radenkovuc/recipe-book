@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button [routerLink]="['/recipes','new']" class="btn btn-success">New recipe</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    @for (recipe of recipes; track recipe.name) {
+      <app-recipe-item [recipe]="recipe"></app-recipe-item>
+    }
+  </div>
+</div>
+

@@ -17,7 +17,6 @@ export class IngredientsService {
 
   updateIngredient = (name: string, amount: number) => {
     if (this.selectedIngredient) {
-      console.log("update")
       this.ingredients = this.ingredients.map(ing => ing.id === this.selectedIngredient.id ? {
         ...ing,
         name,

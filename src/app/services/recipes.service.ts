@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {Recipe} from "../shared/recipe.model";
 import {Ingredient} from "../shared/ingredient.model";
 import {Subject} from "rxjs";
-import {ApiServices} from "./api.services";
 
 @Injectable({providedIn: 'root'})
 export class RecipesService {
@@ -15,7 +14,7 @@ export class RecipesService {
 
   addRecipe = (name: string, description: string, imagePath: string, ingredients: Ingredient[]): Recipe => {
     const newRecipe = {
-      id: Date.now().toString(), name, description, imagePath,
+      name, description, imagePath,
       ingredients: ingredients.map(ingredient => (
         {id: Date.now(), name: ingredient.name, amount: ingredient.amount}))
     }

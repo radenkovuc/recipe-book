@@ -1,22 +1,25 @@
+import {tap} from "rxjs";
+
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Recipe} from "../shared/recipe.model";
 import {RecipesService} from "./recipes.service";
-import {tap} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ApiServices {
+  apiUrl = "https://user-app-theta.vercel.app/api"
+
   constructor(private http: HttpClient, private recipesService: RecipesService) {
   }
 
   saveData() {
     const recipes = this.recipesService.getRecipes()
-    this.http.put<Recipe[]>("https://ng-complete-guide-11ecd-default-rtdb.europe-west1.firebasedatabase.app/recipe.json", recipes)
+    this.http.post<Recipe[]>(`${this.apiUrl}/recipes`, recipes)
       .subscribe(() => console.log("saved"))
   }
 
   fetchData() {
-    return this.http.get<Recipe[]>("https://ng-complete-guide-11ecd-default-rtdb.europe-west1.firebasedatabase.app/recipe.json")
+    return this.http.get<Recipe[]>(`${this.apiUrl}/recipes`)
       .pipe(
         tap(recipes => this.recipesService.saveRecipes(recipes)))
   }

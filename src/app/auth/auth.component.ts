@@ -44,7 +44,7 @@ export class AuthComponent implements OnInit {
     } else {
       this.authServices.register(email, password).subscribe({
         next: res => {
-          this.router.navigate(['/login'])
+          this.router.navigate([''])
           console.log(res)
         },
         error: error => {

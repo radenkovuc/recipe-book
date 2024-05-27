@@ -6,32 +6,40 @@
           <span class="icon-bar"></span>
         }
       </button>
-      <a href="#" class="navbar-brand">Recipe Book</a>
+      <a routerLink="/" class="navbar-brand">Recipe Book</a>
     </div>
     <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
       <ul class="nav navbar-nav">
-        <li role="presentation" routerLinkActive="active">
-          <a routerLink="/login">Login</a>
-        </li>
-        <li role="presentation" routerLinkActive="active">
-          <a routerLink="/signup">Signup</a>
-        </li>
-        <li role="presentation" routerLinkActive="active">
-          <a routerLink="/recipes">Recipes</a>
-        </li>
+        @if (isLoggedIn) {
+          <li role="presentation" routerLinkActive="active">
+            <a routerLink="/recipes">Recipes</a>
+          </li>
+        } @else {
+          <li role="presentation" routerLinkActive="active">
+            <a routerLink="/login">Login</a>
+          </li>
+          <li role="presentation" routerLinkActive="active">
+            <a routerLink="/signup">Signup</a>
+          </li>
+        }
         <li role="presentation" routerLinkActive="active">
           <a routerLink="/shopping-list">Shopping book</a>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a (click)="postRecipes()">Save</a></li>
-            <li><a (click)="fetchRecipes()">Fetch</a></li>
-          </ul>
-        </li>
-      </ul>
+      @if (isLoggedIn) {
+        <ul class="nav navbar-nav navbar-right">
+          <li role="presentation" routerLinkActive="active">
+            <a routerLink="/login" (click)="logout()">Logout</a>
+          </li>
+          <li class="dropdown" appDropdown>
+            <a class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a (click)="postRecipes()">Save</a></li>
+              <li><a (click)="fetchRecipes()">Fetch</a></li>
+            </ul>
+          </li>
+        </ul>
+      }
     </div>
   </div>
 </nav>

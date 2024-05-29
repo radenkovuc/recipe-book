@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {FormsModule, NgForm} from "@angular/forms";
 import {AuthServices} from "../services/auth.services";
+import {AlertComponent} from "../alert/alert.component";
 
 @Component({
   selector: 'app-auth',
@@ -9,7 +10,8 @@ import {AuthServices} from "../services/auth.services";
   standalone: true,
   imports: [
     RouterLink,
-    FormsModule
+    FormsModule,
+    AlertComponent
   ],
 })
 
@@ -27,6 +29,8 @@ export class AuthComponent implements OnInit {
       }
     })
   }
+
+  onCloseError = () => this.errorMessage = ''
 
   loginOrRegister(form: NgForm): void {
     const {email, password} = form.value

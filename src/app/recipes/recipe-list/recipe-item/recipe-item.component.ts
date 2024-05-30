@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {Recipe} from "../../../shared/recipe.model";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+
+import {Recipe} from "../../../shared";
 
 @Component({
   selector: 'app-recipe-item',
@@ -10,7 +11,6 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
     RouterLink,
     RouterLinkActive
   ],
-  styleUrl: './recipe-item.component.css'
 })
 export class RecipeItemComponent {
   @Input({required: true}) recipe: Recipe

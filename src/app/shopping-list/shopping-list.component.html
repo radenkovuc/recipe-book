@@ -3,8 +3,9 @@
     <app-shopping-edit></app-shopping-edit>
     <hr>
     <ul>
-      @for (ingredient of ingredients; track $index) {
-        <a class="list-group-item {{selectedIngredient?.id===ingredient.id?'active':''}}" style="cursor: pointer"
+      @for (ingredient of (ingredients | async); track $index) {
+        <a class="list-group-item {{(selectedIngredient | async)?.id===ingredient.id?'active':''}}"
+           style="cursor: pointer"
            (click)="selectFromList(ingredient)">{{ ingredient.name }} ({{ ingredient.amount }})</a>
       }
     </ul>

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {HeaderComponent} from "./header/header.componenet";
-import {RecipesComponent} from "./recipes/recipes.component";
-import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RouterOutlet} from "@angular/router";
-import {AuthServices} from "./services/auth.services";
+
+import {HeaderComponent} from "./header";
+import {RecipesComponent} from "./recipes";
+import {ShoppingListComponent} from "./shopping-list";
+import {AuthServices} from "./services";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,6 @@ import {AuthServices} from "./services/auth.services";
     ShoppingListComponent,
     RouterOutlet
   ],
-  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   constructor(private authServices: AuthServices) {

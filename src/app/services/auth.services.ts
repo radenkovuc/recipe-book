@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 
 import {EncryptionService} from "./encryption.service";
-import {User} from "../shared/user.model";
+import {User} from "../shared";
 
 interface Response {
   message: string,

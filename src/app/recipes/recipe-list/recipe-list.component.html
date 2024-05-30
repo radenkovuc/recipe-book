@@ -6,7 +6,7 @@
 <hr>
 <div class="row">
   <div class="col-xs-12">
-    @for (recipe of recipes; track recipe.name) {
+    @for (recipe of (recipes | async); track recipe.name) {
       <app-recipe-item [recipe]="recipe"></app-recipe-item>
     }
   </div>

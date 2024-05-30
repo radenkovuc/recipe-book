@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Recipe} from "../../shared/recipe.model";
-import {ActivatedRoute, Data, Router} from "@angular/router";
-import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {RecipesService} from "../../services/recipes.service";
 import {NgForOf} from "@angular/common";
+import {Store} from "@ngrx/store";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+
+import {Recipe} from "../../shared";
+import {AppStore} from "../../store";
+import {addRecipe, deleteRecipe, updateRecipe} from "../../store/recipe";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -21,13 +24,12 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
   isUpdate = false
 
-  constructor(private route: ActivatedRoute, private router: Router, private recipeService: RecipesService) {
+  constructor(private route: ActivatedRoute, private router: Router, private store: Store<AppStore>) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(
-      (data: Data) => {
-        const recipe: Recipe = data['recipe'];
+    this.store.select(s => s.recipes.selectedRecipe).subscribe(
+      recipe => {
         this.isUpdate = !!recipe
         this.recipe = recipe;
         this.initForm()
@@ -69,16 +71,16 @@ export class RecipeEditComponent implements OnInit {
     if (this.recipeForm.valid) {
       const {name, description, imagePath, ingredients} = this.recipeForm.value;
       if (this.isUpdate) {
-        this.recipeService.updateRecipe(this.recipe.id, name, description, imagePath, ingredients)
+        this.store.dispatch(updateRecipe({id: this.recipe.id, name, description, imagePath, ingredients}));
       } else {
-        this.recipe = this.recipeService.addRecipe(name, description, imagePath, ingredients)
+        this.store.dispatch(addRecipe({name, description, imagePath, ingredients}));
       }
       this.router.navigate(['recipes', this.recipe.id]);
     }
   }
 
   delete = () => {
-    this.recipeService.deleteRecipe(this.recipe.id)
+    this.store.dispatch(deleteRecipe({id: this.recipe.id}));
     this.router.navigate(['recipes']);
   }
 

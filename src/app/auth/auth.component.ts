@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {FormsModule, NgForm} from "@angular/forms";
-import {AuthServices} from "../services/auth.services";
-import {AlertComponent} from "../alert/alert.component";
+
+import {AuthServices} from "../services";
+import {AlertComponent} from "../alert";
 
 @Component({
   selector: 'app-auth',

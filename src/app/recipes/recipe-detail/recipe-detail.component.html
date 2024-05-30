@@ -36,6 +36,9 @@
       }
     </div>
   </div>
+} @else if (loading | async) {
+  <h3>Loading</h3>
 } @else {
   <h3>Recipe not found</h3>
+
 }

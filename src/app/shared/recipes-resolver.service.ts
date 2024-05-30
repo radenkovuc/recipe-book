@@ -1,19 +1,17 @@
 import {ResolveFn} from '@angular/router';
 import {inject} from '@angular/core';
-
-import {Recipe} from "./recipe.model";
 import {ApiServices} from "../services/api.services";
-import {RecipesService} from "../services/recipes.service";
+import {AppStore} from "../store";
+import {Store} from "@ngrx/store";
+import {loadRecipes} from "../store/recipe";
 
-export const RecipesResolver: ResolveFn<Recipe[]> = () => {
+export const RecipesResolver: ResolveFn<void> = () => {
   const apiServices = inject(ApiServices);
-  const recipesService = inject(RecipesService);
+  const store = inject(Store<AppStore>);
 
-  const recipes = recipesService.getRecipes();
-
-  if (recipes.length == 0) {
-    return apiServices.fetchData()
-  } else {
-    return recipes;
-  }
+  store.select(s => s.recipes.recipes).subscribe(recipes => {
+    if (recipes.length == 0) {
+      apiServices.fetchData().subscribe(recipes => store.dispatch(loadRecipes({recipes})));
+    }
+  })
 }

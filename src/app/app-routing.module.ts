@@ -16,9 +16,9 @@ const appRoutes: Routes = [
     path: 'recipes', component: RecipesComponent, resolve: [RecipesResolver], canActivate: [canAccessToPages],
     children: [
       {path: '', component: RecipeStartComponent},
-      {path: 'new', component: RecipeEditComponent, resolve: {recipe: RecipeResolver}},
-      {path: ':id', component: RecipeDetailComponent, resolve: {recipe: RecipeResolver}},
-      {path: ':id/edit', component: RecipeEditComponent, resolve: {recipe: RecipeResolver}},
+      {path: 'new', component: RecipeEditComponent, resolve: [RecipeResolver]},
+      {path: ':id', component: RecipeDetailComponent, resolve: [RecipeResolver]},
+      {path: ':id/edit', component: RecipeEditComponent, resolve: [RecipeResolver]},
     ]
   },
   {path: 'shopping-list', component: ShoppingListComponent},

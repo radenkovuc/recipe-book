@@ -1,10 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {Recipe} from "../../shared/recipe.model";
 import {RecipeItemComponent} from "./recipe-item/recipe-item.component";
-import {RecipesService} from "../../services/recipes.service";
 import {RouterLink} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Observable} from "rxjs";
+import {AppStore} from "../../store";
+import {Store} from "@ngrx/store";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-recipe-list',
@@ -12,25 +14,17 @@ import {Subscription} from "rxjs";
   standalone: true,
   imports: [
     RecipeItemComponent,
-    RouterLink
+    RouterLink,
+    AsyncPipe
   ],
   styleUrl: './recipe-list.component.css'
 })
-export class RecipeListComponent implements OnInit, OnDestroy {
-  recipes: Recipe[] = []
-  subscription: Subscription;
+export class RecipeListComponent {
+  recipes: Observable<Recipe[]>
 
-  constructor(private recipeService: RecipesService) {
+  constructor(private store: Store<AppStore>) {
+    this.recipes = this.store.select(s => s.recipes.recipes)
   }
 
-  ngOnInit() {
-    this.recipes = this.recipeService.getRecipes()
-    this.subscription = this.recipeService.recipesChanged.subscribe(recipes => {
-      this.recipes = recipes
-    })
-  }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
 }

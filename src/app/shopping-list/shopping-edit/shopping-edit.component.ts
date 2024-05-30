@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-
-import {IngredientsService} from "../../services/ingreadients.service";
-import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {deleteIngredient, selectIngredient, updateIngredient} from "../../store/shopping-list";
+import {AppStore} from "../../store";
 
 @Component({
   selector: 'app-shopping-edit',
@@ -11,46 +11,44 @@ import {Subscription} from "rxjs";
   imports: [FormsModule, ReactiveFormsModule],
   styleUrl: './shopping-edit.component.css'
 })
-export class ShoppingEditComponent implements OnInit, OnDestroy {
+export class ShoppingEditComponent implements OnInit {
   shoppingForm: FormGroup;
-  subscription: Subscription;
   isUpdate = false
 
-  constructor(private ingredientsService: IngredientsService) {
-  }
+  constructor(private store: Store<AppStore>) {}
 
   ngOnInit(): void {
     this.shoppingForm = new FormGroup({
       'name': new FormControl("", [Validators.required]),
       'amount': new FormControl("", [Validators.required, Validators.min(1)]),
     });
-    this.subscription = this.ingredientsService.ingredientChanged.subscribe(ingredient => {
-      this.isUpdate = !!ingredient;
-      if (ingredient) {
-        this.shoppingForm.controls.name.setValue(ingredient.name);
-        this.shoppingForm.controls.amount.setValue(ingredient.amount);
+
+    this.store.select(s => s.shoppingList.selected).subscribe(selected => {
+      this.isUpdate = !!selected;
+      if (selected) {
+        this.shoppingForm.controls.name.setValue(selected.name);
+        this.shoppingForm.controls.amount.setValue(selected.amount);
       }
     })
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   update = () => {
     if (this.shoppingForm.valid) {
-      this.ingredientsService.updateIngredient(this.shoppingForm.value.name, this.shoppingForm.value.amount)
+      this.store.dispatch(updateIngredient({
+        name: this.shoppingForm.value.name,
+        amount: this.shoppingForm.value.amount
+      }))
       this.clear()
     }
   }
 
   delete = () => {
-    this.ingredientsService.deleteIngredient()
+    this.store.dispatch(deleteIngredient())
     this.clear()
   }
 
   clear = () => {
-    this.ingredientsService.selectIngredient(null)
+    this.store.dispatch(selectIngredient({}))
     this.shoppingForm.reset()
   }
 }

@@ -2,9 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DropdownDirective} from "../shared/dropdown.directive";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {ApiServices} from "../services/api.services";
-import {RecipesService} from "../services/recipes.service";
 import {AuthServices} from "../services/auth.services";
 import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {AppStore} from "../store";
+import {loadRecipes} from "../store/recipe";
 
 @Component({
   selector: 'app-header',
@@ -23,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   subscription: Subscription;
 
-  constructor(readonly apiServices: ApiServices, private recipesService: RecipesService, private authServices: AuthServices, private router: Router) {
+  constructor(readonly apiServices: ApiServices, private store: Store<AppStore>, private authServices: AuthServices, private router: Router) {
   }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   fetchRecipes(): void {
-    this.apiServices.fetchData().subscribe(recipes => this.recipesService.saveRecipes(recipes))
+    this.apiServices.fetchData().subscribe(recipes => this.store.dispatch(loadRecipes({recipes})))
     this.router.navigate([""])
   }
 

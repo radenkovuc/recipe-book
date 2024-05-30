@@ -3,25 +3,25 @@ import {tap} from "rxjs";
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Recipe} from "../shared/recipe.model";
-import {RecipesService} from "./recipes.service";
+import {Store} from "@ngrx/store";
+import {AppStore} from "../store";
+import {loadRecipes} from "../store/recipe";
 
 @Injectable({providedIn: 'root'})
 export class ApiServices {
   apiUrl = "https://user-app-theta.vercel.app/api"
 
-  constructor(private http: HttpClient, private recipesService: RecipesService) {
+  constructor(private http: HttpClient, private store: Store<AppStore>) {
   }
 
   saveData() {
-    const recipes = this.recipesService.getRecipes()
-    this.http.post<Recipe[]>(`${this.apiUrl}/recipes`, recipes)
-      .subscribe(() => console.log("saved"))
+    this.store.select(s => s.recipes.recipes).subscribe(
+      recipes => this.http.post<Recipe[]>(`${this.apiUrl}/recipes`, recipes)
+        .subscribe(() => console.log("saved")))
   }
 
   fetchData() {
     return this.http.get<Recipe[]>(`${this.apiUrl}/recipes`)
-      .pipe(
-        tap(recipes => this.recipesService.saveRecipes(recipes)))
   }
 
 }

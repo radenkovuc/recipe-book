@@ -1,4 +1,4 @@
-import {Ingredient} from "../../shared/ingredient.model";
+import {Ingredient} from "../../shared";
 
 export interface ShoppingListState {
   list: Ingredient[]

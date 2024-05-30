@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DropdownDirective} from "../shared/dropdown.directive";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {ApiServices} from "../services/api.services";
-import {AuthServices} from "../services/auth.services";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
+
+import {DropdownDirective} from "../shared";
+import {ApiServices, AuthServices} from "../services";
 import {AppStore} from "../store";
 import {loadRecipes} from "../store/recipe";
 
@@ -17,7 +17,6 @@ import {loadRecipes} from "../store/recipe";
     RouterLink,
     RouterLinkActive
   ],
-  styleUrl: './header.component.css'
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {

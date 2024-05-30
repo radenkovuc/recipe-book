@@ -4,9 +4,9 @@ import {Store} from "@ngrx/store";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {AppStore} from "../store";
 
-import {ShoppingEditComponent} from "./shopping-edit/shopping-edit.component";
-import {Ingredient} from "../shared/ingredient.model";
+import {ShoppingEditComponent} from "./shopping-edit";
 import {selectIngredient} from "../store/shopping-list";
+import {Ingredient} from "../shared";
 
 @Component({
   selector: 'app-shopping-list',
@@ -17,7 +17,6 @@ import {selectIngredient} from "../store/shopping-list";
     AsyncPipe,
     NgIf
   ],
-  styleUrl: './shopping-list.component.css'
 })
 export class ShoppingListComponent {
   ingredients: Observable<Ingredient[]>;

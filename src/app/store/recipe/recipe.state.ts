@@ -1,4 +1,4 @@
-import {Recipe} from "../../shared/recipe.model";
+import {Recipe} from "../../shared";
 
 export interface RecipeState {
   recipes: Recipe[];

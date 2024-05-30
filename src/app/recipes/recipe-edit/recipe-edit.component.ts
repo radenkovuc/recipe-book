@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Recipe} from "../../shared/recipe.model";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import {Store} from "@ngrx/store";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+
+import {Recipe} from "../../shared";
 import {AppStore} from "../../store";
 import {addRecipe, deleteRecipe, updateRecipe} from "../../store/recipe";
 

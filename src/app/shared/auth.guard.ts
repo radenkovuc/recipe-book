@@ -1,8 +1,8 @@
 import {CanActivateFn, Router} from "@angular/router";
 import {inject} from "@angular/core";
-import {AuthServices} from "../services/auth.services";
 import {map, take} from "rxjs";
 
+import {AuthServices} from "../services";
 
 export const canAccessToPages: CanActivateFn = () => {
   const authServices = inject(AuthServices)

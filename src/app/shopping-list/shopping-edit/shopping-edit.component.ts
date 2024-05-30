@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
+
 import {deleteIngredient, selectIngredient, updateIngredient} from "../../store/shopping-list";
 import {AppStore} from "../../store";
 
@@ -9,7 +10,6 @@ import {AppStore} from "../../store";
   templateUrl: './shopping-edit.component.html',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
-  styleUrl: './shopping-edit.component.css'
 })
 export class ShoppingEditComponent implements OnInit {
   shoppingForm: FormGroup;

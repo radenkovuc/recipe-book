@@ -4,7 +4,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {provideStore} from "@ngrx/store";
 
 import {AppRoutingModule} from "./app/app-routing.module";
-import {AppComponent} from "./app/app.component";
+import {AppComponent} from "./app";
 import {AppStore, store} from "./app/store";
 
 

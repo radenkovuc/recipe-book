@@ -1,7 +1,6 @@
 import {createAction, props} from "@ngrx/store";
 
-import {Ingredient} from "../../shared/ingredient.model";
-import {Recipe} from "../../shared/recipe.model";
+import {Ingredient,Recipe} from "../../shared";
 
 export const selectRecipe = createAction("recipes/select", props<{ recipe: Recipe }>());
 export const addRecipe = createAction("recipes/add", props<{

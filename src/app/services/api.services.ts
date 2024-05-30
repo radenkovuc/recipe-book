@@ -1,11 +1,9 @@
-import {tap} from "rxjs";
-
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Recipe} from "../shared/recipe.model";
 import {Store} from "@ngrx/store";
+
+import {Recipe} from "../shared";
 import {AppStore} from "../store";
-import {loadRecipes} from "../store/recipe";
 
 @Injectable({providedIn: 'root'})
 export class ApiServices {

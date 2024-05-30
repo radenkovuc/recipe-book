@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-
-import {Recipe} from "../../shared/recipe.model";
-import {RecipeItemComponent} from "./recipe-item/recipe-item.component";
 import {RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
-import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {AsyncPipe} from "@angular/common";
+
+import {Recipe} from "../../shared";
+import {RecipeItemComponent} from "./recipe-item";
+import {AppStore} from "../../store";
 
 @Component({
   selector: 'app-recipe-list',
@@ -17,7 +17,6 @@ import {AsyncPipe} from "@angular/common";
     RouterLink,
     AsyncPipe
   ],
-  styleUrl: './recipe-list.component.css'
 })
 export class RecipeListComponent {
   recipes: Observable<Recipe[]>

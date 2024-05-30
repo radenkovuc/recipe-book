@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Recipe} from "../../shared/recipe.model";
-import {DropdownDirective} from "../../shared/dropdown.directive";
 import {Router, RouterLink} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {addIngredients} from "../../store/shopping-list";
-import {AppStore} from "../../store";
-import {deleteRecipe} from "../../store/recipe";
 import {AsyncPipe} from "@angular/common";
 import {Observable} from "rxjs";
+
+import {DropdownDirective, Recipe} from "../../shared";
+import {AppStore} from "../../store";
+import {deleteRecipe} from "../../store/recipe";
+import {addIngredients} from "../../store/shopping-list";
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,7 +19,6 @@ import {Observable} from "rxjs";
     RouterLink,
     AsyncPipe
   ],
-  styleUrl: './recipe-detail.component.css'
 })
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;

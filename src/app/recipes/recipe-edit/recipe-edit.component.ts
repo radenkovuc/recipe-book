@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForOf} from "@angular/common";
-import {Store} from "@ngrx/store";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
@@ -24,7 +23,7 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
   isUpdate = false
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: Store<AppStore>) {
+  constructor(private route: ActivatedRoute, private router: Router, private store: AppStore) {
   }
 
   ngOnInit() {

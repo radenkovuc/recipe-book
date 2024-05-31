@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
-import {Store} from "@ngrx/store";
 import {AsyncPipe, NgIf} from "@angular/common";
-import {AppStore} from "../store";
 
 import {ShoppingEditComponent} from "./shopping-edit";
 import {selectIngredient} from "../store/shopping-list";
+import {AppStore} from "../store";
 import {Ingredient} from "../shared";
 
 @Component({
@@ -22,7 +21,7 @@ export class ShoppingListComponent {
   ingredients: Observable<Ingredient[]>;
   selectedIngredient: Observable<Ingredient>;
 
-  constructor(private store: Store<AppStore>) {
+  constructor(private store: AppStore) {
     this.ingredients = this.store.select(state => state.shoppingList.list)
     this.selectedIngredient = this.store.select(state => state.shoppingList.selected)
   }

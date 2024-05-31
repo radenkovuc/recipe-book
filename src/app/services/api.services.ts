@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Store} from "@ngrx/store";
 
 import {Recipe} from "../shared";
 import {AppStore} from "../store";
@@ -9,7 +8,7 @@ import {AppStore} from "../store";
 export class ApiServices {
   apiUrl = "https://user-app-theta.vercel.app/api"
 
-  constructor(private http: HttpClient, private store: Store<AppStore>) {
+  constructor(private http: HttpClient, private store: AppStore) {
   }
 
   saveData() {

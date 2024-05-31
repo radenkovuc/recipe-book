@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
-import {Store} from "@ngrx/store";
 import {AsyncPipe} from "@angular/common";
 import {Observable} from "rxjs";
 
@@ -24,7 +23,7 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   loading: Observable<boolean>;
 
-  constructor(private store: Store<AppStore>, private router: Router) {
+  constructor(private store: AppStore, private router: Router) {
     this.loading = this.store.select(s => s.recipes.loading)
   }
 

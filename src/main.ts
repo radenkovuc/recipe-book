@@ -5,14 +5,14 @@ import {provideStore} from "@ngrx/store";
 
 import {AppRoutingModule} from "./app/app-routing.module";
 import {AppComponent} from "./app";
-import {AppStore, store} from "./app/store";
+import {appStore} from "./app/store";
 
 
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(AppRoutingModule),
     provideHttpClient(),
-    provideStore<AppStore>(store)
+    provideStore(appStore)
   ]
 })
   .catch(err => console.error(err));

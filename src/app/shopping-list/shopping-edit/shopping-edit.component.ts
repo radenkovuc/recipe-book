@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Store} from "@ngrx/store";
 
 import {deleteIngredient, selectIngredient, updateIngredient} from "../../store/shopping-list";
 import {AppStore} from "../../store";
@@ -15,7 +14,8 @@ export class ShoppingEditComponent implements OnInit {
   shoppingForm: FormGroup;
   isUpdate = false
 
-  constructor(private store: Store<AppStore>) {}
+  constructor(private store: AppStore) {
+  }
 
   ngOnInit(): void {
     this.shoppingForm = new FormGroup({

@@ -1,1 +1,1 @@
-export {store, AppStore} from "./store"
+export {appStore, AppStore} from "./app.store"

@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {Subscription} from "rxjs";
-import {Store} from "@ngrx/store";
 
 import {DropdownDirective} from "../shared";
 import {ApiServices, AuthServices} from "../services";
@@ -20,17 +19,18 @@ import {loadRecipes} from "../store/recipe";
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
-  collapsed = true;
+  collapsed = false;
   isLoggedIn: boolean = false;
   subscription: Subscription;
 
-  constructor(readonly apiServices: ApiServices, private store: Store<AppStore>, private authServices: AuthServices, private router: Router) {
+  constructor(readonly apiServices: ApiServices, private store: AppStore, private authServices: AuthServices, private router: Router) {
   }
 
   ngOnInit() {
-    this.subscription = this.authServices.user.subscribe(user => {
-      this.isLoggedIn = !!user
-    })
+    this.subscription = this.store.select(s => s.user.user)
+      .subscribe(user => {
+        this.isLoggedIn = !!user
+      })
   }
 
   ngOnDestroy() {
@@ -38,7 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   fetchRecipes(): void {
-    this.apiServices.fetchData().subscribe(recipes => this.store.dispatch(loadRecipes({recipes})))
+    this.apiServices.fetchData()
+      .subscribe(recipes => this.store.dispatch(loadRecipes({recipes})))
     this.router.navigate([""])
   }
 

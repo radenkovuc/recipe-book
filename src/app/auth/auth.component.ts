@@ -4,6 +4,7 @@ import {FormsModule, NgForm} from "@angular/forms";
 
 import {AuthServices} from "../services";
 import {AlertComponent} from "../alert";
+import {AppStore} from "../store";
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +21,7 @@ export class AuthComponent implements OnInit {
   isLogin = false
   errorMessage: string = ""
 
-  constructor(private route: ActivatedRoute, private router: Router, private authServices: AuthServices) {
+  constructor(private route: ActivatedRoute, private router: Router, private authServices: AuthServices, private store: AppStore) {
   }
 
   ngOnInit() {
@@ -39,7 +40,6 @@ export class AuthComponent implements OnInit {
       this.authServices.login(email, password).subscribe({
         next: res => {
           this.router.navigate([''])
-          console.log(res)
         },
         error: error => {
           console.log(error)
@@ -50,7 +50,6 @@ export class AuthComponent implements OnInit {
       this.authServices.register(email, password).subscribe({
         next: res => {
           this.router.navigate([''])
-          console.log(res)
         },
         error: error => {
           console.log(error)

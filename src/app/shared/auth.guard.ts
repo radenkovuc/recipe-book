@@ -1,14 +1,13 @@
 import {CanActivateFn, Router} from "@angular/router";
 import {inject} from "@angular/core";
 import {map, take} from "rxjs";
-
-import {AuthServices} from "../services";
+import {AppStore} from "../store";
 
 export const canAccessToPages: CanActivateFn = () => {
-  const authServices = inject(AuthServices)
+  const store = inject(AppStore)
   const router = inject(Router)
 
-  return authServices.user.pipe(
+  return store.select(s => s.user.user).pipe(
     take(1),
     map(user => {
       const isAuthenticated = !!user

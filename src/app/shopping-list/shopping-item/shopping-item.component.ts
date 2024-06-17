@@ -1,5 +1,5 @@
-import {Component, inject, input, OnInit, signal} from '@angular/core';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Component, inject, input, OnDestroy, OnInit, signal} from '@angular/core';
+import {Subscription} from "rxjs";
 
 import {selectIngredient} from "../../store/shopping-list";
 import {AppStore} from "../../store";
@@ -11,17 +11,22 @@ import {Ingredient} from "../../shared";
   standalone: true,
   imports: [],
 })
-export class ShoppingItemComponent implements OnInit {
+export class ShoppingItemComponent implements OnInit, OnDestroy {
   private store = inject(AppStore)
   ingredient = input.required<Ingredient>();
   isSelected = signal<boolean>(false)
+  subscription: Subscription
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.store.select(state => state.shoppingList.selected).pipe(takeUntilDestroyed()).subscribe(
-      selectedIngredient => this.isSelected.set(selectedIngredient.id === this.ingredient().id))
+    this.subscription = this.store.select(state => state.shoppingList.selected).subscribe(
+      selectedIngredient => this.isSelected.set(selectedIngredient?.id === this.ingredient().id))
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   selectFromList() {

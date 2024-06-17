@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
@@ -11,12 +11,12 @@ import {AppStore} from "../../store";
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent {
   private store = inject(AppStore)
   shoppingForm: FormGroup;
   isUpdate = false
 
-  ngOnInit(): void {
+  constructor() {
     this.shoppingForm = new FormGroup({
       'name': new FormControl("", [Validators.required]),
       'amount': new FormControl("", [Validators.required, Validators.min(1)]),

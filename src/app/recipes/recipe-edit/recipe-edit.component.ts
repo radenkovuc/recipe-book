@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NgForOf} from "@angular/common";
 import {Router} from "@angular/router";
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -19,14 +19,14 @@ import {addRecipe, deleteRecipe, updateRecipe} from "../../store/recipe";
   ],
   styleUrl: './recipe-edit.component.css'
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent {
   private router = inject(Router)
   private store = inject(AppStore)
   recipe: Recipe;
   recipeForm: FormGroup;
   isUpdate = false
 
-  ngOnInit() {
+  constructor() {
     this.store.select(s => s.recipes.selectedRecipe)
       .pipe(takeUntilDestroyed()).subscribe(
       recipe => {

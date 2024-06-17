@@ -5,7 +5,7 @@ import {shoppingListReducer, ShoppingListState} from "./shopping-list";
 import {recipeReducer, RecipeState} from "./recipe";
 import {userReducer, UserState} from "./user";
 
-interface AppState {
+export interface AppState {
   shoppingList: ShoppingListState
   recipes: RecipeState
   user: UserState

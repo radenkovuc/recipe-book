@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
 import {Observable} from "rxjs";
@@ -20,14 +20,14 @@ import {addIngredients} from "../../store/shopping-list";
   ],
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Recipe;
-  loading: Observable<boolean>;
+  private store = inject(AppStore)
+  private router = inject(Router)
+  recipe: Recipe
+  loading: Observable<boolean>
 
-  constructor(private store: AppStore, private router: Router) {
-    this.loading = this.store.select(s => s.recipes.loading)
-  }
 
   ngOnInit() {
+    this.loading = this.store.select(s => s.recipes.loading)
     this.store.select(s => s.recipes.selectedRecipe).subscribe(recipe => this.recipe = recipe)
   }
 

@@ -10,7 +10,7 @@
     </div>
     <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
       <ul class="nav navbar-nav">
-        @if (isLoggedIn) {
+        @if (isLoggedIn | async) {
           <li role="presentation" routerLinkActive="active">
             <a routerLink="/recipes">Recipes</a>
           </li>
@@ -26,7 +26,7 @@
           <a routerLink="/shopping-list">Shopping book</a>
         </li>
       </ul>
-      @if (isLoggedIn) {
+      @if (isLoggedIn | async) {
         <ul class="nav navbar-nav navbar-right">
           <li role="presentation" routerLinkActive="active">
             <a routerLink="/login" (click)="logout()">Logout</a>

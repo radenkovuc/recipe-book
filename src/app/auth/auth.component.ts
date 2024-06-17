@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {FormsModule, NgForm} from "@angular/forms";
+import {Observable} from "rxjs";
 
 import {AuthServices} from "../services";
 import {AlertComponent} from "../alert";
-import {AppStore} from "../store";
+import {Response} from "../services/auth.services";
 
 @Component({
   selector: 'app-auth',
@@ -18,10 +19,13 @@ import {AppStore} from "../store";
 })
 
 export class AuthComponent implements OnInit {
+  private route = inject(ActivatedRoute)
+  private router = inject(Router)
+  private authServices = inject(AuthServices)
   isLogin = false
   errorMessage: string = ""
 
-  constructor(private route: ActivatedRoute, private router: Router, private authServices: AuthServices, private store: AppStore) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -36,26 +40,22 @@ export class AuthComponent implements OnInit {
 
   loginOrRegister(form: NgForm): void {
     const {email, password} = form.value
+    let responseObservable: Observable<Response>;
+
     if (this.isLogin) {
-      this.authServices.login(email, password).subscribe({
-        next: res => {
-          this.router.navigate([''])
-        },
-        error: error => {
-          console.log(error)
-          this.errorMessage = error.error.message;
-        }
-      });
+      responseObservable = this.authServices.login(email, password)
     } else {
-      this.authServices.register(email, password).subscribe({
-        next: res => {
-          this.router.navigate([''])
-        },
-        error: error => {
-          console.log(error)
-          this.errorMessage = error.error.message;
-        }
-      });
+      responseObservable = this.authServices.register(email, password);
     }
+
+    responseObservable.subscribe({
+      next: () => {
+        void this.router.navigate([''])
+      },
+      error: error => {
+        console.log(error)
+        this.errorMessage = error.error.message;
+      }
+    })
   }
 }

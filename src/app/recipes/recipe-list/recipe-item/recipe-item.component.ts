@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input, Input} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 
 import {Recipe} from "../../../shared";
@@ -13,5 +13,5 @@ import {Recipe} from "../../../shared";
   ],
 })
 export class RecipeItemComponent {
-  @Input({required: true}) recipe: Recipe
+  recipe= input.required<Recipe>();
 }

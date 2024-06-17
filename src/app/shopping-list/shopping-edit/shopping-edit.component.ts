@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 import {deleteIngredient, selectIngredient, updateIngredient} from "../../store/shopping-list";
 import {AppStore} from "../../store";
@@ -11,11 +12,9 @@ import {AppStore} from "../../store";
   imports: [FormsModule, ReactiveFormsModule],
 })
 export class ShoppingEditComponent implements OnInit {
+  private store = inject(AppStore)
   shoppingForm: FormGroup;
   isUpdate = false
-
-  constructor(private store: AppStore) {
-  }
 
   ngOnInit(): void {
     this.shoppingForm = new FormGroup({
@@ -23,7 +22,7 @@ export class ShoppingEditComponent implements OnInit {
       'amount': new FormControl("", [Validators.required, Validators.min(1)]),
     });
 
-    this.store.select(s => s.shoppingList.selected).subscribe(selected => {
+    this.store.select(s => s.shoppingList.selected).pipe(takeUntilDestroyed()).subscribe(selected => {
       this.isUpdate = !!selected;
       if (selected) {
         this.shoppingForm.controls.name.setValue(selected.name);

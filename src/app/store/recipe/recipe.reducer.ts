@@ -23,13 +23,17 @@ export const recipeReducer = createReducer(initialState,
     }
   }),
   on(updateRecipe, (state, action) => {
-    const recipes = state.recipes.map(recipe => (recipe.id === action.id ? {
+    const recipes = state.recipes.map((recipe, i) => (recipe.id === action.id ? {
       id: action.id,
       name: action.name,
       description: action.description,
       imagePath: action.imagePath,
-      ingredients: action.ingredients.map(ingredient => (
-        {id: Date.now(), name: ingredient.name, amount: ingredient.amount}))
+      ingredients: action.ingredients.map((ingredient, j) => (
+        {
+          id: Date.now() + i * 10 + j,
+          name: ingredient.name,
+          amount: ingredient.amount
+        }))
     } : recipe))
     return {...state, recipes}
   }),

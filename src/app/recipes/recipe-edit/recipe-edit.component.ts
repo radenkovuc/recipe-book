@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {NgForOf} from "@angular/common";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 import {Recipe} from "../../shared";
 import {AppStore} from "../../store";
@@ -19,21 +20,22 @@ import {addRecipe, deleteRecipe, updateRecipe} from "../../store/recipe";
   styleUrl: './recipe-edit.component.css'
 })
 export class RecipeEditComponent implements OnInit {
+  private router = inject(Router)
+  private store = inject(AppStore)
   recipe: Recipe;
   recipeForm: FormGroup;
   isUpdate = false
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: AppStore) {
-  }
-
   ngOnInit() {
-    this.store.select(s => s.recipes.selectedRecipe).subscribe(
+    this.store.select(s => s.recipes.selectedRecipe)
+      .pipe(takeUntilDestroyed()).subscribe(
       recipe => {
         this.isUpdate = !!recipe
         this.recipe = recipe;
         this.initForm()
       })
   }
+
 
   private initForm(): void {
     let recipeName = '';

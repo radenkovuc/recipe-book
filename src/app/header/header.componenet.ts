@@ -1,11 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Observable} from "rxjs";
+import {AsyncPipe} from "@angular/common";
 
 import {DropdownDirective} from "../shared";
 import {ApiServices, AuthServices} from "../services";
 import {AppStore} from "../store";
 import {loadRecipes} from "../store/recipe";
+import {isLoggedIn} from '../store/user';
 
 @Component({
   selector: 'app-header',
@@ -14,27 +16,21 @@ import {loadRecipes} from "../store/recipe";
   imports: [
     DropdownDirective,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    AsyncPipe
   ],
 })
 
-export class HeaderComponent implements OnInit, OnDestroy {
-  collapsed = false;
-  isLoggedIn: boolean = false;
-  subscription: Subscription;
-
-  constructor(readonly apiServices: ApiServices, private store: AppStore, private authServices: AuthServices, private router: Router) {
-  }
+export class HeaderComponent implements OnInit {
+  private apiServices = inject(ApiServices)
+  private store = inject(AppStore)
+  private authServices = inject(AuthServices)
+  private router = inject(Router)
+  collapsed: boolean = false
+  isLoggedIn: Observable<boolean>
 
   ngOnInit() {
-    this.subscription = this.store.select(s => s.user.user)
-      .subscribe(user => {
-        this.isLoggedIn = !!user
-      })
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.isLoggedIn = this.store.select(isLoggedIn)
   }
 
   fetchRecipes(): void {

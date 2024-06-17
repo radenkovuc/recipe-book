@@ -4,7 +4,8 @@ import {RouterOutlet} from "@angular/router";
 import {HeaderComponent} from "./header";
 import {RecipesComponent} from "./recipes";
 import {ShoppingListComponent} from "./shopping-list";
-import {AuthServices} from "./services";
+import {AppStore} from "./store";
+import {load} from "./store/user";
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,10 @@ import {AuthServices} from "./services";
   ],
 })
 export class AppComponent implements OnInit {
-  constructor(private authServices: AuthServices) {
+  constructor(private store: AppStore) {
   }
 
   ngOnInit() {
-    this.authServices.autoLogin()
+    this.store.dispatch(load())
   }
 }
